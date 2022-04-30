@@ -1,0 +1,17 @@
+
+ul.menu li {list-style: none!important; display: inline-block;}
+.linie {background:red; height:10px; margin:20px}
+.nastere {margin-left:5px;color:red;}
+.moarte {margin-right:5px; color:red;}
+.nume {text-align:center;display: inline-block;padding:0 10px; word-break: break-word;}
+.viata {
+    display:flex; 
+    justify-content:space-between; 
+    margin-top:10px; 
+    border-right:5px solid red; 
+    border-left:5px solid red; 
+    background:#EAEAEA; 
+    height:fit-content;}
+.wrapper {background:grey;width:fit-content;}
+div.wrapper > a > div:hover {background:#FFDEAD;}
+a {text-decoration:none;}
