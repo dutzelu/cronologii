@@ -46,11 +46,44 @@ if (isset($_GET['id'])) {
 
     <?php
 
+    /* Evenimente */ 
+
+    echo '<p class="m-3"><strong>Evenimente ale vieții</strong></p>';
+
+    $sql_ev = "SELECT * FROM evenimente WHERE data_start >= $data_nasterii AND data_final <= $data_mortii ORDER BY data_start ASC";
+    $stmt = $conn->prepare($sql_ev);
+    $result = $stmt->execute();
+    $result = $stmt->get_result();
+
+
+    echo '<ul>';
+
+    while($data = $result->fetch_assoc()) {
+ 
+        $id_ev = $data['id'];
+        $nume_ev = $data['nume'];
+        $an_start = 1860;
+        $data_start_ev = $data['data_start'];
+        $data_final_ev = $data['data_final'];
+        $an_start_ev = date('Y', strtotime($data['data_start']));
+        $an_final_ev = date('Y', strtotime($data['data_final']));
+        $margine_ev = ($an_start_ev - $an_start) * 8;
+        $varsta_la_ev = $an_start_ev - $anul_nasterii;
+
+    echo '<li>avea <strong>' . $varsta_la_ev . ' ani</strong> la:</span><span class="nume">' . date('d M. Y', strtotime($data_start_ev )) . ' - ' . $nume_ev . "</span>" . '<span class="moarte"></li>' 
+    ;
+
+}
+
+   echo '</ul>';
+
+    /* Contemporan cu */ 
+
     $query = "
         SELECT * FROM jsn_marturisitori A 
         WHERE (A.mDataAdormire >=  $data_nasterii AND mDataNastere <= $data_mortii) AND (mDataNastere IS NOT NULL AND mDataAdormire IS NOT NULL) ORDER BY mDataNastere ASC ;
-    
     ";
+    
     $stmt = $conn->prepare($query);
     $result = $stmt->execute();
     $result = $stmt->get_result();
@@ -74,15 +107,16 @@ if (isset($_GET['id'])) {
         echo '<div class="wrapper">';
     
         echo '<a href="persoana.php?id=' . $id_martir . '"><div class="viata" style="width:' . $lungime_linie . 'px; margin-left:' . $margine . 'px;">
-    
-             
-        
+          
                 <span class="nastere">' . $anul_nasterii . '</span><span class="nume">' . $prefix . ' ' . $prenume . ' ' . $nume . ' (' . $varsta . ' ani) ' . "</span>" . '<span class="moarte">' . $anul_mortii . 
             
             '</span></div></a>';
     
         echo '</div>'; 
     } 
+
+
+
     ?>
 
 
